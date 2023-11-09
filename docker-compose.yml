@@ -1,0 +1,37 @@
+version: '3'
+services:
+
+  airflow:
+    image: apache/airflow:latest
+    container_name: airflow
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - LOAD_EX=y
+      - EXECUTOR=Local
+    command: >
+      bash -c "airflow db init && airflow users create \
+      --username admin \
+      --password admin \
+      --firstname Phil \
+      --lastname sv \
+      --role Admin \
+      --email philsv@example.com && airflow webserver && airflow scheduler"
+    volumes:
+      - ${DAG_PATH}
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: tolldata
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_USER: airflow
+      MYSQL_PASSWORD: airflow
+    ports:
+      - "3306:3306"
+    command: --init-file /docker-entrypoint-initdb.d/init.sql
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql

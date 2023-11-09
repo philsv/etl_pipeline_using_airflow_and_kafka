@@ -1,0 +1,17 @@
+{
+    "python.testing.pytestArgs": [
+        "."
+    ],
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/*.pyc": true,
+        "**/*.mypy_cache": true,
+        "**.dccache": true,
+        "**.pytest_cache": true,
+        "**/.pytest_cache": true,
+        "geckodriver.log": true,
+        "%System*": true,
+    },
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
+}
